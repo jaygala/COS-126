@@ -1,0 +1,63 @@
+/******************************************************************************
+ *  Name:
+ *  NetID:
+ *  Precept:
+ *
+ *  Description:
+ *
+ ******************************************************************************/
+
+00: FFFF   constant 0xFFFF               
+01: 0001   constant 0x0001               
+02: 0002   constant 0x0002               
+03: 0003   constant 0x0003               
+
+10: 8100   R[1] <- M[00]                 Storing FFFF in R1
+11: 8AFF   read R[A]                     m1   
+12: 21A1   R[1] <- R[A] - R[1]           Subtracting the first input with FFFF
+13: C13F   if (R[1] == 0) goto 3F        If it is FFFF then go to HALT
+14: 8BFF   read R[B]                     m2
+15: 8CFF   read R[C]                     m3
+16: 8DFF   read R[D]                     m4
+17: 87FF   read R[7]                     p1
+18: 88FF   read R[8]                     p2
+19: 89FF   read R[9]                     p3
+1A: 44AB   R[4] <- R[A] ^ R[B]           m1^m2
+1B: 444D   R[4] <- R[4] ^ R[D]           m1^m2^m4
+1C: 4447   R[4] <- R[4] ^ R[7]           m1^m2^m4^p1
+1D: 45AC   R[5] <- R[A] ^ R[C]           m1^m3
+1E: 455D   R[5] <- R[5] ^ R[D]           m1^m3^m4
+1F: 4558   R[5] <- R[5] ^ R[8]           m1^m3^m4^p2
+20: 46BC   R[6] <- R[B] ^ R[C]           m2^m3
+21: 466D   R[6] <- R[6] ^ R[D]           m2^m3^m4
+22: 4669   R[6] <- R[6] ^ R[9]           m2^m3^m4^p3
+*c1 = R4;  c2 = R5;  c3 = R6;
+23: 1245   R[2] <- R[4] + R[5]           R2 = c1+c2
+24: 1326   R[3] <- R[2] + R[6]           R3 = c1+c2+c3
+25: 8103   R[1] <- M[03]                 R1 = 3
+26: 2331   R[3] <- R[3] - R[1]           
+27: 8E01   R[E] <- M[01]                 
+28: C333   if (R[3] == 0) goto 33        
+29: 8102   R[1] <- M[02]                 R1 = 2
+2A: 2221   R[2] <- R[2] - R[1]           
+2B: C235   if (R[2] == 0) goto 35        
+2C: 1246   R[2] <- R[4] + R[6]           
+2D: 1356   R[3] <- R[5] + R[6]           
+2E: 2221   R[2] <- R[2] - R[1]           
+2F: C237   if (R[2] == 0) goto 37        
+30: 2331   R[3] <- R[3] - R[1]           
+31: C339   if (R[3] == 0) goto 39        
+32: C03A   goto 3A                       Go to the write part
+33: 4DED   R[D] <- R[E] ^ R[D]           
+34: C03A   goto 3A                       
+35: 4AEA   R[A] <- R[E] ^ R[A]           
+36: C03A   goto 3A                       
+37: 4BEB   R[B] <- R[E] ^ R[B]           
+38: C03A   goto 3A                       
+39: 4CEC   R[C] <- R[E] ^ R[C]           
+3A: 9AFF   write R[A]                    
+3B: 9BFF   write R[B]                    
+3C: 9CFF   write R[C]                    
+3D: 9DFF   write R[D]                    
+3E: C010   goto 10                       
+3F: 0000   halt                          

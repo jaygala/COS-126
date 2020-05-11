@@ -1,0 +1,32 @@
+/******************************************************************************
+ *  Name:
+ *  NetID:
+ *  Precept:
+ *
+ *  Description:
+ *
+ ******************************************************************************/
+00: FFFF   constant 0xFFFF               
+
+10: 8100   R[1] <- M[00]                 Storing FFFF in R1
+11: 8AFF   read R[A]                     Reading the first input    
+12: 22A1   R[2] <- R[A] - R[1]           Subtracting the first input with FFFF
+13: C225   if (R[2] == 0) goto 25        If it is FFFF then go to HALT
+14: 8BFF   read R[B]                     Reading the 2nd input
+15: 8CFF   read R[C]                     Reading the 3rd input
+16: 8DFF   read R[D]                     Reading the 4th input
+17: 9AFF   write R[A]                    Write the 1st number
+18: 9BFF   write R[B]                    Write the 2nd number
+19: 9cFF   write R[C]                    Write the 3rd number
+1A: 9DFF   write R[D]                    Write the 4th number
+1B: 47AB   R[7] <- R[A] ^ R[B]           m1^m2
+1C: 477D   R[7] <- R[7] ^ R[D]           m1^m2^m4
+1D: 48AC   R[8] <- R[A] ^ R[C]           m1^m3
+1E: 488D   R[8] <- R[8] ^ R[D]           m1^m3^m4
+1F: 49BC   R[9] <- R[B] ^ R[C]           m2^m3
+20: 499D   R[9] <- R[9] ^ R[D]           m2^m3^m4
+21: 97FF   write R[7]                    
+22: 98FF   write R[8]                    
+23: 99FF   write R[9]                    
+24: C011   goto 11                                        
+25: 0000   halt                          
